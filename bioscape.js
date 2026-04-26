@@ -8,17 +8,17 @@ let dpr = 1;
 let frame = 0;
 
 const biologyBits = [
-  "DNA",
-  "RNA",
   "cell",
-  "gene",
-  "virus",
   "protein",
   "enzyme",
-  "vaccine",
-  "antibody",
+  "cartilage",
+  "synovial fluid",
+  "joint capsule",
+  "ligament",
+  "tendon",
+  "bone",
+  "osteoarthritis",
   "evidence",
-  "peer review",
   "microscope"
 ];
 const glyphs = Array.from({ length: 34 }, (_, index) => ({
