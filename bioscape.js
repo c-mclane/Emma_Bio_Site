@@ -1,4 +1,4 @@
-const canvas = document.querySelector("#mathscape");
+const canvas = document.querySelector("#bioscape");
 const ctx = canvas.getContext("2d");
 const pointer = { x: 0.5, y: 0.5 };
 const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
