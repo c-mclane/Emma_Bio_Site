@@ -7,9 +7,22 @@ let height = 0;
 let dpr = 1;
 let frame = 0;
 
-const symbols = ["sin", "cos", "π", "Σ", "λ", "DNA", "μ", "∫", "p<.05", "n=?", "x²", "Δ"];
+const biologyBits = [
+  "DNA",
+  "RNA",
+  "cell",
+  "gene",
+  "virus",
+  "protein",
+  "enzyme",
+  "vaccine",
+  "antibody",
+  "evidence",
+  "peer review",
+  "microscope"
+];
 const glyphs = Array.from({ length: 34 }, (_, index) => ({
-  text: symbols[index % symbols.length],
+  text: biologyBits[index % biologyBits.length],
   x: Math.random(),
   y: Math.random(),
   speed: 0.18 + Math.random() * 0.34,
@@ -56,7 +69,64 @@ function drawCurve(time, orbit, hueShift) {
   ctx.shadowBlur = 0;
 }
 
-function drawGlyphs(time) {
+function drawHelix(cx, cy, length, phase, hue) {
+  const turns = 9;
+  const step = length / turns;
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.rotate(Math.sin(phase) * 0.35);
+
+  for (let i = 0; i < turns; i += 1) {
+    const x = i * step - length / 2;
+    const yA = Math.sin(i * 0.9 + phase) * 18;
+    const yB = -yA;
+
+    ctx.beginPath();
+    ctx.strokeStyle = `hsla(${hue + i * 8}, 92%, 48%, 0.2)`;
+    ctx.lineWidth = 1.2;
+    ctx.moveTo(x, yA);
+    ctx.lineTo(x + step * 0.7, yB);
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.fillStyle = `hsla(${hue + i * 11}, 92%, 52%, 0.3)`;
+    ctx.arc(x, yA, 3.4, 0, Math.PI * 2);
+    ctx.arc(x, yB, 3.4, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  ctx.restore();
+}
+
+function drawCell(cx, cy, radius, phase, hue) {
+  ctx.beginPath();
+  for (let i = 0; i <= 90; i += 1) {
+    const angle = (i / 90) * Math.PI * 2;
+    const edge = radius + Math.sin(angle * 5 + phase) * 4;
+    const x = cx + Math.cos(angle) * edge;
+    const y = cy + Math.sin(angle) * edge;
+
+    if (i === 0) {
+      ctx.moveTo(x, y);
+    } else {
+      ctx.lineTo(x, y);
+    }
+  }
+
+  ctx.fillStyle = `hsla(${hue}, 85%, 56%, 0.08)`;
+  ctx.strokeStyle = `hsla(${hue}, 85%, 46%, 0.26)`;
+  ctx.lineWidth = 1.4;
+  ctx.fill();
+  ctx.stroke();
+
+  ctx.beginPath();
+  ctx.fillStyle = `hsla(${hue + 50}, 90%, 50%, 0.18)`;
+  ctx.arc(cx + Math.cos(phase) * radius * 0.22, cy + Math.sin(phase) * radius * 0.18, radius * 0.28, 0, Math.PI * 2);
+  ctx.fill();
+}
+
+function drawBiologyLabels(time) {
   ctx.font = "700 14px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace";
   ctx.textAlign = "center";
 
@@ -74,6 +144,21 @@ function drawGlyphs(time) {
     ctx.fillText(glyph.text, 0, 0);
     ctx.restore();
   });
+}
+
+function drawBiologyForms(time) {
+  for (let i = 0; i < 7; i += 1) {
+    const phase = time * (0.9 + i * 0.08) + i * 1.7;
+    const x = width * (0.16 + ((i * 0.13 + Math.sin(phase) * 0.04) % 0.72));
+    const y = height * (0.16 + ((i * 0.19 + Math.cos(phase * 0.7) * 0.05) % 0.7));
+    const hue = (time * 54 + i * 38) % 360;
+
+    if (i % 2 === 0) {
+      drawHelix(x, y, 96 + i * 9, phase, hue);
+    } else {
+      drawCell(x, y, 30 + i * 3, phase, hue);
+    }
+  }
 }
 
 function drawOrbitDots(time) {
@@ -111,7 +196,8 @@ function animate() {
   }
 
   drawOrbitDots(time);
-  drawGlyphs(time);
+  drawBiologyForms(time);
+  drawBiologyLabels(time);
   ctx.globalCompositeOperation = "source-over";
 
   requestAnimationFrame(animate);
