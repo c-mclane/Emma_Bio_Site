@@ -203,72 +203,38 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
-function setupFlipCards() {
-  document.querySelectorAll(".flip-card").forEach((card) => {
-    const front = document.createElement("div");
-    const back = document.createElement("div");
-    const inner = document.createElement("div");
-    const title = card.dataset.backTitle || "More detail";
-    const body = card.dataset.back || "Add more information here.";
-
-    front.className = "card-face front";
-    back.className = "card-face back";
-    inner.className = "card-inner";
-
-    while (card.firstChild) {
-      front.appendChild(card.firstChild);
-    }
-
-    back.innerHTML = `<strong>${title}</strong><p>${body}</p><span class="flip-hint">Tap to flip back</span>`;
-    inner.append(front, back);
-    card.appendChild(inner);
-    card.tabIndex = 0;
-    card.setAttribute("role", "button");
-    card.setAttribute("aria-pressed", "false");
-    card.setAttribute("title", "Tap or swipe with a stylus to flip");
-
-    let startX = 0;
-    let startY = 0;
-
-    card.addEventListener("pointerdown", (event) => {
-      startX = event.clientX;
-      startY = event.clientY;
-    });
-
-    card.addEventListener("pointerup", (event) => {
-      if (event.target.closest("a")) {
-        return;
-      }
-
-      const moved = Math.hypot(event.clientX - startX, event.clientY - startY);
-      if (moved < 12 || Math.abs(event.clientX - startX) > 34) {
-        card.classList.toggle("is-flipped");
-        card.setAttribute("aria-pressed", String(card.classList.contains("is-flipped")));
-      }
-    });
-
-    card.addEventListener("keydown", (event) => {
-      if (event.key !== "Enter" && event.key !== " ") {
-        return;
-      }
-
-      event.preventDefault();
-      card.classList.toggle("is-flipped");
-      card.setAttribute("aria-pressed", String(card.classList.contains("is-flipped")));
-    });
-  });
-}
-
 function tiltCards(event) {
   pointer.x = event.clientX / Math.max(width, 1);
   pointer.y = event.clientY / Math.max(height, 1);
+
+  document.querySelectorAll(".content-card, .member-card, .signal-card").forEach((card) => {
+    const rect = card.getBoundingClientRect();
+    const inside =
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom;
+
+    if (!inside) {
+      card.style.transform = "";
+      return;
+    }
+
+    const x = (event.clientX - rect.left) / rect.width - 0.5;
+    const y = (event.clientY - rect.top) / rect.height - 0.5;
+    card.style.transform = `perspective(900px) rotateX(${y * -5}deg) rotateY(${x * 5}deg) translateY(-3px)`;
+  });
 }
 
 window.addEventListener("resize", resize);
 window.addEventListener("pointermove", tiltCards);
+window.addEventListener("pointerleave", () => {
+  document.querySelectorAll(".content-card, .member-card, .signal-card").forEach((card) => {
+    card.style.transform = "";
+  });
+});
 
 resize();
-setupFlipCards();
 
 if (!prefersReducedMotion) {
   animate();
