@@ -3,9 +3,149 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Emma's Biology Website</title>
+    <title>Biology Misinformation Project</title>
+    <link rel="stylesheet" href="styles.css">
   </head>
   <body>
-    <h1>Hello world, this is Emma's website for biology ❤️</h1>
+    <header class="site-header">
+      <a class="brand" href="index.html">
+        <span class="brand-mark"></span>
+        <span>Biology Evidence Lab</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="index.html" aria-current="page">Project</a>
+        <a href="team.html">Team</a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-content">
+          <p class="eyebrow">Biology misinformation research project</p>
+          <h1>Topic title goes here</h1>
+          <p class="hero-copy">A clean space for the group to explain the claim, investigate the evidence, and turn the findings into a useful public-facing resource.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="#report">Build the Report</a>
+            <a class="button secondary" href="#social">Social Post</a>
+          </div>
+        </div>
+        <div class="hero-panel" aria-label="Project status summary">
+          <div class="signal-card">
+            <span class="signal-label">Claim</span>
+            <span class="signal-value">To be selected</span>
+          </div>
+          <div class="signal-card">
+            <span class="signal-label">Source</span>
+            <span class="signal-value">To be documented</span>
+          </div>
+          <div class="signal-card">
+            <span class="signal-label">Evidence</span>
+            <span class="signal-value">Peer reviewed</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-grid" id="report" aria-labelledby="report-title">
+        <div class="section-heading">
+          <p class="eyebrow">One-page content</p>
+          <h2 id="report-title">Report framework</h2>
+        </div>
+
+        <article class="content-card wide">
+          <span class="card-number">01</span>
+          <h3>Topic and Claim</h3>
+          <div class="placeholder-block"></div>
+          <div class="placeholder-line medium"></div>
+          <div class="placeholder-line short"></div>
+        </article>
+
+        <article class="content-card">
+          <span class="card-number">02</span>
+          <h3>Source of the Claim</h3>
+          <div class="placeholder-line"></div>
+          <div class="placeholder-line medium"></div>
+          <div class="placeholder-line short"></div>
+        </article>
+
+        <article class="content-card">
+          <span class="card-number">03</span>
+          <h3>People Potentially Affected</h3>
+          <div class="metric-shell">
+            <span class="metric-value">TBD</span>
+            <span class="metric-label">estimated reach</span>
+          </div>
+        </article>
+
+        <article class="content-card wide">
+          <span class="card-number">04</span>
+          <h3>Scientific Evidence</h3>
+          <div class="evidence-list">
+            <div class="evidence-row">
+              <span>Study</span>
+              <span>Subjects</span>
+              <span>Finding</span>
+            </div>
+            <div class="evidence-row empty">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="evidence-row empty">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </article>
+
+        <article class="content-card">
+          <span class="card-number">05</span>
+          <h3>Conclusion</h3>
+          <div class="placeholder-line"></div>
+          <div class="placeholder-line"></div>
+          <div class="placeholder-line medium"></div>
+        </article>
+
+        <article class="content-card">
+          <span class="card-number">06</span>
+          <h3>Knowledge Gaps</h3>
+          <div class="placeholder-line"></div>
+          <div class="placeholder-line medium"></div>
+          <div class="placeholder-line short"></div>
+        </article>
+      </section>
+
+      <section class="split-section" id="social">
+        <article class="feature-panel">
+          <p class="eyebrow">References</p>
+          <h2>Citation list</h2>
+          <ol class="reference-list">
+            <li><span></span></li>
+            <li><span></span></li>
+            <li><span></span></li>
+          </ol>
+        </article>
+
+        <article class="social-preview">
+          <div class="social-topbar">
+            <span class="avatar"></span>
+            <div>
+              <strong>Social media summary</strong>
+              <small>Educational post draft</small>
+            </div>
+          </div>
+          <div class="social-body">
+            <div class="placeholder-line"></div>
+            <div class="placeholder-line"></div>
+            <div class="placeholder-line medium"></div>
+          </div>
+          <div class="social-footer">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </article>
+      </section>
+    </main>
   </body>
 </html>
