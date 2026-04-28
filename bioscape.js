@@ -61,10 +61,10 @@ function drawCurve(time, orbit, hueShift) {
     }
   }
 
-  ctx.lineWidth = 1.35 + orbit * 0.16;
-  ctx.strokeStyle = `hsla(${(time * 55 + hueShift + orbit * 58) % 360}, 92%, 56%, 0.22)`;
-  ctx.shadowBlur = 18;
-  ctx.shadowColor = `hsla(${(time * 55 + hueShift + orbit * 58) % 360}, 92%, 56%, 0.34)`;
+  ctx.lineWidth = 1.75 + orbit * 0.2;
+  ctx.strokeStyle = `hsla(${(time * 55 + hueShift + orbit * 58) % 360}, 94%, 48%, 0.34)`;
+  ctx.shadowBlur = 22;
+  ctx.shadowColor = `hsla(${(time * 55 + hueShift + orbit * 58) % 360}, 94%, 50%, 0.42)`;
   ctx.stroke();
   ctx.shadowBlur = 0;
 }
@@ -83,16 +83,16 @@ function drawHelix(cx, cy, length, phase, hue) {
     const yB = -yA;
 
     ctx.beginPath();
-    ctx.strokeStyle = `hsla(${hue + i * 8}, 92%, 48%, 0.2)`;
-    ctx.lineWidth = 1.2;
+    ctx.strokeStyle = `hsla(${hue + i * 8}, 92%, 42%, 0.54)`;
+    ctx.lineWidth = 1.7;
     ctx.moveTo(x, yA);
     ctx.lineTo(x + step * 0.7, yB);
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.fillStyle = `hsla(${hue + i * 11}, 92%, 52%, 0.3)`;
-    ctx.arc(x, yA, 3.4, 0, Math.PI * 2);
-    ctx.arc(x, yB, 3.4, 0, Math.PI * 2);
+    ctx.fillStyle = `hsla(${hue + i * 11}, 92%, 44%, 0.66)`;
+    ctx.arc(x, yA, 4.2, 0, Math.PI * 2);
+    ctx.arc(x, yB, 4.2, 0, Math.PI * 2);
     ctx.fill();
   }
 
@@ -114,14 +114,14 @@ function drawCell(cx, cy, radius, phase, hue) {
     }
   }
 
-  ctx.fillStyle = `hsla(${hue}, 85%, 56%, 0.08)`;
-  ctx.strokeStyle = `hsla(${hue}, 85%, 46%, 0.26)`;
-  ctx.lineWidth = 1.4;
+  ctx.fillStyle = `hsla(${hue}, 85%, 56%, 0.14)`;
+  ctx.strokeStyle = `hsla(${hue}, 85%, 40%, 0.48)`;
+  ctx.lineWidth = 1.8;
   ctx.fill();
   ctx.stroke();
 
   ctx.beginPath();
-  ctx.fillStyle = `hsla(${hue + 50}, 90%, 50%, 0.18)`;
+  ctx.fillStyle = `hsla(${hue + 50}, 90%, 44%, 0.34)`;
   ctx.arc(cx + Math.cos(phase) * radius * 0.22, cy + Math.sin(phase) * radius * 0.18, radius * 0.28, 0, Math.PI * 2);
   ctx.fill();
 }
@@ -140,8 +140,11 @@ function drawBiologyLabels(time) {
     ctx.translate(x, y);
     ctx.rotate(Math.sin(time * 0.7 + glyph.phase) * 0.18);
     ctx.font = `800 ${glyph.size}px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace`;
-    ctx.fillStyle = `hsla(${hue}, 90%, 38%, 0.16)`;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = `hsla(${hue}, 90%, 54%, 0.26)`;
+    ctx.fillStyle = `hsla(${hue}, 82%, 30%, 0.42)`;
     ctx.fillText(glyph.text, 0, 0);
+    ctx.shadowBlur = 0;
     ctx.restore();
   });
 }
@@ -177,8 +180,8 @@ function drawOrbitDots(time) {
       const hue = (time * 70 + i * 13 + ring * 46) % 360;
 
       ctx.beginPath();
-      ctx.fillStyle = `hsla(${hue}, 95%, 54%, 0.26)`;
-      ctx.arc(x, y, 2.2 + ring * 0.35, 0, Math.PI * 2);
+      ctx.fillStyle = `hsla(${hue}, 95%, 44%, 0.48)`;
+      ctx.arc(x, y, 2.8 + ring * 0.45, 0, Math.PI * 2);
       ctx.fill();
     }
   }
@@ -189,7 +192,7 @@ function animate() {
   const time = frame / 90;
 
   ctx.clearRect(0, 0, width, height);
-  ctx.globalCompositeOperation = "screen";
+  ctx.globalCompositeOperation = "source-over";
 
   for (let orbit = 0; orbit < 7; orbit += 1) {
     drawCurve(time * (0.75 + orbit * 0.035), orbit, orbit * 23);
